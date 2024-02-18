@@ -1,0 +1,2 @@
+#!/bin/sh
+xdotool type $(unipicker --command "rofi -dmenu -config ~/.config/rofi/rofidmenu.rasi")
