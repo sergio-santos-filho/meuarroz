@@ -32,8 +32,8 @@ alias \
 	ffmpeg="ffmpeg -hide_banner"
 
 # Colorize commands when possible.
+	#ls="ls -hN --color=auto --group-directories-first" \
 alias \
-	ls="ls -hN --color=auto --group-directories-first" \
 	grep="grep --color=auto" \
 	diff="diff --color=auto" \
 	ccat="highlight --out-format=ansi" \
@@ -52,10 +52,19 @@ alias \
 	xi="sudo xbps-install" \
 	xr="sudo xbps-remove -R" \
 	xq="xbps-query" \
-	z="zathura"
+	za="zathura"
 
 alias \
 	lf="lfub" \
 	magit="nvim -c MagitOnly" \
 	ref="shortcuts >/dev/null; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/shortcutrc ; source ${XDG_CONFIG_HOME:-$HOME/.config}/shell/zshnameddirrc" \
 	weath="less -S ${XDG_CACHE_HOME:-$HOME/.cache}/weatherreport" \
+
+# Substituindo ls por eza para melhor experiência
+alias \
+	ld="eza -lD" \
+	la="eza -lf --color=always | grep -v /" \
+	lh="eza -dl .* --group-directories-first" \
+	ls="eza -al --group-directories-first" \
+	lz="eza -alf --color=always --sort=size | grep -v /" \
+	lt="eza -al --sort=modified" \

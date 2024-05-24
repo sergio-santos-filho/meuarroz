@@ -1,0 +1,3 @@
+#!/bin/sh
+notify-send "Abrindo video, aguarde"
+mpv $(xclip -o) || notify-send "Algo deu errado"
