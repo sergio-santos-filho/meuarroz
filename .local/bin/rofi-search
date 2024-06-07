@@ -1,0 +1,42 @@
+#!/bin/sh
+
+DMBROWSER="firefox"
+
+declare -a options=(
+"google       gl https://www.google.com/search?q="
+"youtube      yt https://www.youtube.com/results?search_query="
+"archwiki     aw https://wiki.archlinux.org/index.php?search="
+"googleimages gi https://www.google.com/search?hl=en&tbm=isch&q="
+"duckduckgo   dd https://duckduckgo.com/?q="
+"translate    tr https://translate.google.com/?sl=auto&tl=pt&text="
+"wikipedia    wk https://en.wikipedia.org/wiki/"
+"quit"
+)
+
+input=$(printf '%s\n' "${options[@]}" | rofi -dmenu -i 20 -p 'Escolha seu buscador:') || exit
+
+for option in "${options[@]}"; do
+    first_word=$(echo "$option" | awk '{print $2}')
+    keyword=$(echo "$input" | awk '{print $1}')
+    if [[ "$first_word" == "$keyword" ]]; then
+	filtered_options=$(printf '%s\n' "${options[@]}" | grep " $first_word ")
+        query=$(echo "$input" | cut -d' ' -f2-)
+        engineurl=$(echo "$filtered_options" | awk '{print $3}')
+	$DMBROWSER "$engineurl""$query"
+	exit
+    fi
+done
+## Picking a search engine.
+while [ -z "$engine" ]; do
+enginelist=$input
+engineurl=$(echo "$enginelist" | awk '{print $NF}')
+engine=$(echo "$enginelist" | awk '{print $1}')
+done
+
+# Searching the chosen engine.
+while [ -z "$query" ]; do
+query=$(rofi -dmenu -i 20 -p "Searching $engine:") || exit
+done
+
+# Display search results in web browser
+$DMBROWSER "$engineurl""$query"
